@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.calo.open-iterated-files</id>
     <name>Open the Iterated Files</name>
-    <version>0.1.1.0</version>
+    <version>0.1.1.1</version>
     <vendor email="calo.hk@gmail.com" url="https://github.com/carlos-andres/intellij-open-iterated-files">Git Project</vendor>
     <description>
         <![CDATA[

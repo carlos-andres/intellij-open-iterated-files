@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.calo"
-version = "1.1"
+version = "1.1.1"
 
 repositories {
     mavenCentral()
@@ -25,13 +25,18 @@ tasks {
         sourceCompatibility = "17"
         targetCompatibility = "17"
     }
+
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
     }
 
+    // Enable JCEF in headless mode
+    withType<Test> {
+        systemProperty("ide.browser.jcef.headless.enabled", "true")
+    }
+
     patchPluginXml {
         sinceBuild.set("222")
-        untilBuild.set("241.*")
     }
 
     signPlugin {
