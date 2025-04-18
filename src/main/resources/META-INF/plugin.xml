@@ -1,28 +1,27 @@
 <idea-plugin>
-    <id>com.calo.open-iterated-files</id>
-    <name>Open the Iterated Files</name>
-    <version>0.1.1.1</version>
-    <vendor email="calo.hk@gmail.com" url="https://github.com/carlos-andres/intellij-open-iterated-files">Git Project</vendor>
-    <description>
-        <![CDATA[
+<id>com.calo.open-iterated-files</id>
+<name>Open the Iterated Files</name>
+<version>0.1.1.4</version>
+<vendor email="calo.hk@gmail.com" url="https://github.com/carlos-andres/intellij-open-iterated-files">Git Project</vendor>
+<description>
+    <![CDATA[
           This plugin adds an action to PhpStorm that allows developers to quickly open all modified
           and new un-versioned files in the editor with a single click. It integrates with the VCS
           to identify files that have been changed or are not yet tracked by the version control system.
           This is particularly useful for reviewing changes before a commit or adding new files to the repository.
         ]]>
-    </description>
-    <depends>com.jetbrains.php</depends>
-    <depends>com.intellij.modules.platform</depends>
-    <idea-version since-build="222"/>
-    <extensions defaultExtensionNs="com.intellij">
-    </extensions>
-    <actions>
-        <action id="com.calo.OpenModifiedFilesAction"
-                class="com.calo.OpenModifiedFilesAction"
-                text="Open Iterated Files"
-                description="Opens all iterated (New/modified) files in a Git project">
-            <add-to-group group-id="VcsGroups" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta alt O"/>
-        </action>
-    </actions>
+</description>
+<depends>com.intellij.modules.platform</depends>
+    <idea-version since-build="233.15619.7"/>
+<extensions defaultExtensionNs="com.intellij">
+</extensions>
+<actions>
+    <action id="com.calo.OpenModifiedFilesAction"
+            class="com.calo.OpenModifiedFilesAction"
+            text="Open Iterated Files"
+            description="Opens all iterated (New/modified) files in a Git project">
+        <add-to-group group-id="VcsGroups" anchor="last"/>
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta alt O"/>
+    </action>
+</actions>
 </idea-plugin>

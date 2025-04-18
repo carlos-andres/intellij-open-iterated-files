@@ -1,8 +1,8 @@
 package com.calo
 
+import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.fileEditor.FileEditorManager
 import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.vcs.changes.Change
@@ -14,63 +14,70 @@ import com.intellij.openapi.vcs.changes.ChangeListManager
 class OpenModifiedFilesAction : AnAction(), DumbAware {
 
     /**
-     * Opens all modified and un-versioned new files in the editor when the action is performed.
-     * @param event Carries information on the invocation place and data available
+     * Triggered when the action is performed. It opens all files that are either newly added or modified,
+     * as well as all un-versioned files (not yet under version control).
+     *
+     * @param event The event containing context about the action invocation.
      */
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.project ?: return
-        val changeListManager = ChangeListManager.getInstance(project)
 
-        val changes = changeListManager.defaultChangeList.changes
+        // Avoid acting on uninitialized or disposed projects
+        if (!project.isInitialized || project.isDisposed) return
 
-        // Get changes from the default change list and filter for modified/new files
-        val versionedFilesToOpen = changes
-            .filter { it.type == Change.Type.NEW || it.type == Change.Type.MODIFICATION }
-            .mapNotNull { it.virtualFile }
-
-        val fileEditorManager = FileEditorManager.getInstance(project)
-
-        versionedFilesToOpen.forEach { file ->
-            fileEditorManager.openFile(file, true)
-        }
-
-        // Get un-versioned file paths and convert to VirtualFile
-        val unVersionedFilePaths = changeListManager.unversionedFilesPaths
-
-        val unVersionedFiles = unVersionedFilePaths.mapNotNull { it.virtualFile }
-        unVersionedFiles.forEach { file ->
-            fileEditorManager.openFile(file, true)
-        }
+        openModifiedAndUnversionedFiles(event)
     }
 
     /**
-     * Updates the presentation of the action based on the current context.
-     * @param event Carries information on the invocation place and data available
+     * Opens all versioned (new or modified) and un-versioned files in the editor.
+     *
+     * @param event The event with context including the project and editor state.
+     */
+    private fun openModifiedAndUnversionedFiles(event: AnActionEvent) {
+        val project = event.project ?: return
+        val changeListManager = ChangeListManager.getInstance(project)
+        val fileEditorManager = FileEditorManager.getInstance(project)
+
+        // Open modified or new files under version control
+        val versionedFilesToOpen = changeListManager.defaultChangeList.changes
+            .filter { it.type == Change.Type.NEW || it.type == Change.Type.MODIFICATION }
+            .mapNotNull { it.virtualFile }
+
+        versionedFilesToOpen.forEach { fileEditorManager.openFile(it, true) }
+
+        // Open un-versioned (not yet tracked) files
+        val unVersionedFiles = changeListManager.unversionedFilesPaths
+            .mapNotNull { it.virtualFile }
+
+        unVersionedFiles.forEach { fileEditorManager.openFile(it, true) }
+    }
+
+    /**
+     * Updates the action's visibility and enabled state based on whether there are files to open.
+     *
+     * @param event The action event containing the project and context.
      */
     override fun update(event: AnActionEvent) {
         val project = event.project
         val changeListManager = project?.let { ChangeListManager.getInstance(it) }
-        event.presentation.isEnabledAndVisible = project != null && (changeListManager?.hasChangesWithoutCommit() ?: false)
+
+        event.presentation.isEnabledAndVisible =
+            project != null && (changeListManager?.hasChangesToOpen() == true)
     }
 
     /**
-     * Specifies that the action update should run on the background thread.
-     * @return The thread to use for update.
+     * Indicates that the action update logic should run on a background thread.
      */
-    override fun getActionUpdateThread(): ActionUpdateThread {
-        return ActionUpdateThread.BGT
-    }
+    override fun getActionUpdateThread(): ActionUpdateThread = ActionUpdateThread.BGT
 
     /**
-     * Determines if there are any versioned changes or unversioned files.
-     * @return True if there are changes without commit, false otherwise.
+     * Helper extension to check for any versioned or un-versioned files that haven't been committed.
      */
-    private fun ChangeListManager.hasChangesWithoutCommit(): Boolean {
-        val hasVersionedChanges = this.defaultChangeList.changes.any {
+    private fun ChangeListManager.hasChangesToOpen(): Boolean {
+        val hasVersionedChanges = defaultChangeList.changes.any {
             it.type == Change.Type.NEW || it.type == Change.Type.MODIFICATION
         }
-        val hasUnversionedFiles = this.unversionedFilesPaths.isNotEmpty()
+        val hasUnversionedFiles = unversionedFilesPaths.isNotEmpty()
         return hasVersionedChanges || hasUnversionedFiles
     }
-
 }

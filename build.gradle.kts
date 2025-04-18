@@ -1,51 +1,50 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "1.9.0"
-    id("org.jetbrains.intellij") version "1.15.0"
+    id("org.jetbrains.kotlin.jvm") version "1.9.25"
+    id("org.jetbrains.intellij.platform") version "2.3.0"
 }
 
 group = "com.calo"
-version = "1.1.1"
+version = "1.1.4"
 
 repositories {
     mavenCentral()
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 // Configure Gradle IntelliJ Plugin
-// Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
-intellij {
-    version.set("2022.2")
-    type.set("PS") // Target IDE Platform
-    plugins.set(listOf(/* Plugin Dependencies */))
+// Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
+dependencies {
+    intellijPlatform {
+        create("IC", "2024.2.5")
+        testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
+
+        // Add necessary plugin dependencies for compilation here, example:
+        // bundledPlugin("com.intellij.java")
+    }
+}
+
+intellijPlatform {
+    pluginConfiguration {
+        ideaVersion {
+            sinceBuild = "242"
+        }
+
+        changeNotes = """
+      Update compatibility
+    """.trimIndent()
+    }
 }
 
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
-        sourceCompatibility = "17"
-        targetCompatibility = "17"
+        sourceCompatibility = "21"
+        targetCompatibility = "21"
     }
-
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-
-    // Enable JCEF in headless mode
-    withType<Test> {
-        systemProperty("ide.browser.jcef.headless.enabled", "true")
-    }
-
-    patchPluginXml {
-        sinceBuild.set("222")
-    }
-
-    signPlugin {
-        certificateChain.set(System.getenv("CERTIFICATE_CHAIN"))
-        privateKey.set(System.getenv("PRIVATE_KEY"))
-        password.set(System.getenv("PRIVATE_KEY_PASSWORD"))
-    }
-
-    publishPlugin {
-        token.set(System.getenv("PUBLISH_TOKEN"))
+        kotlinOptions.jvmTarget = "21"
     }
 }
