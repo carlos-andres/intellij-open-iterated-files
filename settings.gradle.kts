@@ -1,8 +1,1 @@
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-    }
-}
-
-rootProject.name = "open-iterated-files"
+rootProject.name = "intellij-open-iterated-files"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <path d="M90,15L90,105C90,107.76 87.76,110 85,110L15,110C12.24,110 10,107.76 10,105L10,15C10,12.24 12.24,10 15,10L85,10C87.76,10 90,12.24 90,15Z" style="fill:rgb(240,240,240);"/>
+    <path d="M10,10L60,10L80,30L80,110L10,110L10,10Z" style="fill:rgb(221,221,221);fill-rule:nonzero;"/>
+    <path d="M30,40C33.333,36.667 36.667,36.667 40,40C43.333,43.333 46.667,43.333 50,40C53.333,43.333 56.667,43.333 60,40C63.333,36.667 66.667,36.667 70,40" style="fill:none;fill-rule:nonzero;stroke:rgb(255,204,0);stroke-width:2px;"/>
+    <path d="M30,60C33.333,56.667 36.667,56.667 40,60C43.333,63.333 46.667,63.333 50,60C53.333,63.333 56.667,63.333 60,60C63.333,56.667 66.667,56.667 70,60" style="fill:none;fill-rule:nonzero;stroke:rgb(101,116,176);stroke-width:2px;"/>
+    <path d="M30,80C33.333,76.667 36.667,76.667 40,80C43.333,83.333 46.667,83.333 50,80C53.333,83.333 56.667,83.333 60,80C63.333,76.667 66.667,76.667 70,80" style="fill:none;fill-rule:nonzero;stroke:rgb(0,204,102);stroke-width:2px;"/>
+    <circle cx="30" cy="40" r="3" style="fill:rgb(101,116,176);"/>
+    <circle cx="50" cy="40" r="3" style="fill:rgb(255,204,0);"/>
+    <circle cx="70" cy="40" r="3" style="fill:rgb(0,204,102);"/>
+    <circle cx="30" cy="60" r="3" style="fill:rgb(101,116,176);"/>
+    <circle cx="50" cy="60" r="3" style="fill:rgb(255,204,0);"/>
+    <circle cx="70" cy="60" r="3" style="fill:rgb(0,204,102);"/>
+    <circle cx="30" cy="80" r="3" style="fill:rgb(101,116,176);"/>
+    <circle cx="50" cy="80" r="3" style="fill:rgb(255,204,0);"/>
+    <circle cx="70" cy="80" r="3" style="fill:rgb(0,204,102);"/>
+    <g transform="matrix(1,0,0,1,15,30)">
+        <text x="0px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:14px;fill:rgb(60,81,134);">O-I-F</text>
+    </g>
+</svg>
